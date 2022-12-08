@@ -54,9 +54,12 @@
                           return card.idList == list.id;
                         });
                       });
-                    const groupByMemberUserName = cardsInList.groupBy(card => {
-                      return card.member.username;
-                    });
+                    const groupByMemberUserName = cardsInList.reduce((group, card) => {
+                      const { member } = card.member.username;
+                      group[member] = group[member] ?? [];
+                      group[member].push(card);
+                      return group;
+                    }, {});
                     console.log('group', groupByMemberUserName)
                     t.popup({
                       title: "",
