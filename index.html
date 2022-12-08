@@ -53,14 +53,18 @@
                           return card.idList == list.id;
                         });
                       });
-                    const groupByMemberUserName = cardsInList.reduce((group, card) => {
-                      console.log(card.member)
-                      const { member } = card.member.username;
-                      group[member] = group[member] ?? [];
-                      group[member].push(card);
-                      return group;
-                    }, {});
-                    console.log('group', groupByMemberUserName)
+                      const estimatePerMember = []
+                      cardsInList.forEach(card => {
+                        if (card.members.count > 0) {
+                          card.members.forEach(cardMember => {
+                            estimatePerMember[cardMember.username] = (estimatePerMember[cardMember.username] || 0) + 1
+                          });
+                        }
+                        else {
+                          estimatePerMember[null] = (estimatePerMember[null] || 0) + 1
+                        }
+                        });
+                    console.log('group', estimatePerMember)
                     t.popup({
                       title: "",
                       items: [
