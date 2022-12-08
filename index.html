@@ -9,8 +9,16 @@
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
     var onBtnClick = function (t, opts) {
-      t.list('doing').then(function (list) {
-        console.log(JSON.stringify(list, null, 2));
+      var doingListId = t.list('id', 'name')
+        .then(function (list) {
+          if (list.name === 'doing') {
+            return list.id
+          }
+        });
+      t.card('all').then(function (card) {
+        if (card.listId === doingListId) {
+          console.log(card.name)
+        }
       });
       return t.popup({
         title: 'Estimates',
