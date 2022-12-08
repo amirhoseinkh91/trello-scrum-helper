@@ -16,6 +16,7 @@
             return list.id
           }
         });
+      console.log('doing list id is', doingListId)
       t.cards('all').then(function (card) {
         console.log('card', card)
         if (card.listId === doingListId) {
