@@ -16,8 +16,7 @@
                 return {
                   text: list.name,
                   callback: async function (t, opts) {
-                    var cardsInList = await t
-                      .cards("all")
+                    var cardsInList = await t.cards("all")
                       .then(function (cards) {
                         return cards.filter(function (card) {
                           return card.idList == list.id;
@@ -36,21 +35,26 @@
                           estimatePerMember.push(obj)
                         }
                       }
+                      function readEstimatedFromCardName(card) {
+                        const myArray = /.*(\[[0-9]{1,2}\]).+/g.exec(card.name);
+                        console.log(card.name, myArray)
+                      }
                       cardsInList.forEach(card => {
                         if (card.members.length == 0) {
+                          readEstimatedFromCardName(card)
                           addEstimateToMember('no assignee', 1)
                         } else {
                           card.members.forEach(cardMember => {
+                            readEstimatedFromCardName(card)
                             addEstimateToMember(cardMember.username, 1)
                           });
                         }
                       });
-                    console.log('group', estimatePerMember)
                     t.popup({
                       title: 'Estimates',
                       items: estimatePerMember.map(function(item) {
                          return {
-                          text: item.username + 'est: ' + item.estimates,
+                          text: item.username + '\test: ' + item.estimates,
                           callback: function() {}
                          };
                       })
