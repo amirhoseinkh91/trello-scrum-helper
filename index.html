@@ -49,9 +49,8 @@
                     t.popup({
                       title: 'Estimates',
                       items: estimatePerMember.map(function(item) {
-                        console.log(item)
                          return {
-                          text: item,
+                          text: item.username + 'est: ' + item.estimates,
                           callback: function() {}
                          };
                       })
