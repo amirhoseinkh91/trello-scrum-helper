@@ -24,12 +24,24 @@
                         });
                       });
                       const estimatePerMember = []
+                      function addEstimateToMember(member, hours) {
+                        let obj = estimatePerMember.find(item => item.username == member)
+                        if (obj != null) {
+                          obj.estimates = (obj.estimates || 0 ) + hours
+                        } else {
+                          obj = {
+                            username: member,
+                            estimates: hours
+                          }
+                          estimatePerMember.push(obj)
+                        }
+                      }
                       cardsInList.forEach(card => {
                         if (card.members.length == 0) {
-                          estimatePerMember['no assignee'] = (estimatePerMember['no assignee'] || 0) + 1
+                          addEstimateToMember('no assignee', 1)
                         } else {
                           card.members.forEach(cardMember => {
-                            estimatePerMember[cardMember.username] = (estimatePerMember[cardMember.username] || 0) + 1
+                            addEstimateToMember(cardMember.username, 1)
                           });
                         }
                       });
