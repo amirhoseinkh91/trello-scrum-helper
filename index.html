@@ -54,10 +54,10 @@
                           return card.idList == list.id;
                         });
                       });
-                    var group = cardsInList.group(function (card) {
-                      return card.members.username
-                    })
-                    console.log('group', group)
+                    const groupByMemberUserName = cardsInList.groupBy(card => {
+                      return card.member.username;
+                    });
+                    console.log('group', groupByMemberUserName)
                     t.popup({
                       title: "",
                       items: [
