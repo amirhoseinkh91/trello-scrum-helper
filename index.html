@@ -39,7 +39,8 @@
                       items: estimatePerMember.map(function(item) {
                         console.log(item)
                          return {
-                          text: item
+                          text: item,
+                          callback: function() {}
                          };
                       })
                     });
