@@ -9,7 +9,9 @@
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
     var onBtnClick = function (t, opts) {
-      console.log(t.lists)
+      t.list('all').then(function (list) {
+        console.log(JSON.stringify(list, null, 2));
+      });
       return t.popup({
         title: 'Estimates',
         items: [{
