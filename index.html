@@ -19,8 +19,8 @@
       var doingCards = await t.cards('all')
       .then(function (cards) {
         return cards.filter(function (card) {
-          console.log('filter card', card.name, card.listId, doingList.id)
-          return card.listId == doingList.id;
+          console.log('filter card', card.name, card.idList, doingList.id)
+          return card.idList == doingList.id;
         });
       });
       console.log('doing cards are', doingCards)
