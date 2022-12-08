@@ -21,7 +21,9 @@
           return card.listId == doingListId;
         });
       });
-      console.log('doing cards are: ', doingCards)
+      console.log('doing cards are: ', doingCards.each(function (item) {
+        console.log(item.name, item.id)
+      }))
       return t.popup({
         title: 'Estimates',
         items: [{
