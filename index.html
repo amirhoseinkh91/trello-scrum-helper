@@ -9,7 +9,7 @@
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
     var onBtnClick = function (t, opts) {
-      t.list('all').then(function (list) {
+      t.list('doing').then(function (list) {
         console.log(JSON.stringify(list, null, 2));
       });
       return t.popup({
