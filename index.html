@@ -8,20 +8,17 @@
 <body>
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
-    var onBtnClick = function (t, opts) {
-      var doingListId = t.lists('id', 'name')
+    var onBtnClick = async function (t, opts) {
+      var doingList = await t.lists('id', 'name')
         .then(function (lists) {
-          var doingList = lists.find(function (list) {
+          return lists.find(function (list) {
             return list.name == 'doing'
           });
-          doingListId = doingList.id
         });
-      var doingCards = t.cards('all').then(function (cards) {
-        console.log('doing list id is ', doingListId)
-        return cards
-      }).then(function (cards) {
+        console.log('doing list id is ', doingList.id)
+      var doingCards = await t.cards('all').then(function (cards) {
         return cards.filter(function (card) {
-          return card.listId == doingListId;
+          return card.listId == doingList.id;
         });
       });
       console.log('doing cards are', doingCards)
@@ -46,14 +43,14 @@
       });
     };
     TrelloPowerUp.initialize({
-      'board-buttons': function (t, options) {
+      'board-buttons': async function (t, options) {
         return [{
           icon: {
             dark: 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-black.svg',
             light: 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-white.svg'
           },
           text: 'Show Est.',
-          callback: onBtnClick,
+          callback: await onBtnClick,
           condition: 'edit',
         }];
       }
