@@ -8,22 +8,21 @@
 <body>
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
-    var onBtnClick = async function (t, opts) {
-      var doingList = await t.lists('id', 'name')
+    var showEstimates = async function (t, opts) {
+      var sprintBacklogList = await t.lists('id', 'name')
         .then(function (lists) {
           return lists.find(function (list) {
-            return list.name == 'doing'
+            return list.name == 'Sprint Backlog'
           });
         });
-      console.log('doing list id is ', doingList.id)
-      var doingCards = await t.cards('all')
+      var cardsInList = await t.cards('all')
       .then(function (cards) {
         return cards.filter(function (card) {
-          console.log('filter card', card.name, card.idList, doingList.id)
           return card.idList == doingList.id;
-        });
+        })
+        .group(({ member }) => member);
       });
-      console.log('doing cards are', doingCards)
+      console.log('cards in list', cardsInList)
       return t.popup({
         title: 'Estimates',
         items: [{
@@ -51,8 +50,8 @@
             dark: 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-black.svg',
             light: 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-white.svg'
           },
-          text: 'Show Est.',
-          callback: await onBtnClick,
+          text: 'Estimates',
+          callback: await showEstimates,
           condition: 'edit',
         }];
       }
