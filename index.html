@@ -18,12 +18,13 @@
         });
       var doingCards = t.cards('all').then(function (cards) {
         return cards.filter(function (card) {
+          console.log("filter for card: ", card.name, card.id)
           return card.listId == doingListId;
         });
       });
-      console.log('doing cards are: ', doingCards.each(function (item) {
-        console.log(item.name, item.id)
-      }))
+      doingCards.forEach(element => {
+        console.log('doing card', item.name, item.id)
+      });
       return t.popup({
         title: 'Estimates',
         items: [{
