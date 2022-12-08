@@ -1,79 +1,111 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-</head>
-
-<body>
-  <script src="https://p.trellocdn.com/power-up.min.js"></script>
-  <script>
-    var showEstimates = async function (t, opts) {
-      // var selectedList = await t.lists('id', 'name')
-      //   .then(function (lists) {
-      //     return lists.find(function (list) {
-      //       return list.name == 'Sprint Backlog'
-      //     });
-      //   });
-      // var cardsInList = await t.cards('all')
-      // .then(function (cards) {
-      //   return cards.filter(function (card) {
-      //     return card.idList == selectedList.id;
-      //   })
-      //   .group(({ member }) => member);
-      // });
-      // console.log('cards in list', cardsInList)
-      return t.popup({
-        title: 'Estimates',
-        // items: [{
-        //   text: 'Choose List',
-        //   callback: function (t, opts) {
-        //     console.log("Choose Time")
-        //    }
-        // }, {
-        //   text: 'In 1 hour',
-        //   callback: function (t, opts) {
-        //     console.log("In 1 hour")
-        //    }
-        // }, {
-        //   text: 'In 2 hours',
-        //   callback: function (t, opts) {
-        //     console.log("In 2 hours")
-        //    }
-        // }]
-        items: await t.lists('id', 'name')
-          .then(function (lists) {
-            return lists.map(function (list) {
-              console.log('mapping list', list)
-              return {
-                text: list.name,
-                callback: function (t, opts) {
-                  console.log('selected list is ', list.name, list.id)
-                }
-              }
-            });
-          }),
-        search: {
-          count: 3,
-          placeholder: 'Search Lists',
-          empty: 'No List Found'
-        }
-      });
-    };
-    TrelloPowerUp.initialize({
-      'board-buttons': async function (t, options) {
-        return [{
-          icon: {
-            dark: 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-black.svg',
-            light: 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-white.svg'
+  <body>
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <script>
+      var showEstimates = async function (t, opts) {
+        // var selectedList = await t.lists('id', 'name')
+        //   .then(function (lists) {
+        //     return lists.find(function (list) {
+        //       return list.name == 'Sprint Backlog'
+        //     });
+        //   });
+        // var cardsInList = await t.cards('all')
+        // .then(function (cards) {
+        //   return cards.filter(function (card) {
+        //     return card.idList == selectedList.id;
+        //   })
+        //   .group(({ member }) => member);
+        // });
+        // console.log('cards in list', cardsInList)
+        return t.popup({
+          title: "Estimates",
+          // items: [{
+          //   text: 'Choose List',
+          //   callback: function (t, opts) {
+          //     console.log("Choose Time")
+          //    }
+          // }, {
+          //   text: 'In 1 hour',
+          //   callback: function (t, opts) {
+          //     console.log("In 1 hour")
+          //    }
+          // }, {
+          //   text: 'In 2 hours',
+          //   callback: function (t, opts) {
+          //     console.log("In 2 hours")
+          //    }
+          // }]
+          items: await t.lists("id", "name").then(
+            await function (lists) {
+              return lists.map(function (list) {
+                return {
+                  text: list.name,
+                  callback: async function (t, opts) {
+                    console.log("selected list is ", list.name, list.id);
+                    var cardsInList = await t
+                      .cards("all")
+                      .then(function (cards) {
+                        return cards.filter(function (card) {
+                          return card.idList == list.id;
+                        });
+                      });
+                    console.log("cards in list are:", list, cardsInList);
+                    t.popup({
+                      title: "",
+                      items: [
+                        {
+                          text: "Choose List",
+                          callback: function (t, opts) {
+                            console.log("Choose Time");
+                          },
+                        },
+                        {
+                          text: "In 1 hour",
+                          callback: function (t, opts) {
+                            console.log("In 1 hour");
+                          },
+                        },
+                        {
+                          text: "In 2 hours",
+                          callback: function (t, opts) {
+                            console.log("In 2 hours");
+                          },
+                        },
+                      ],
+                    });
+                  },
+                };
+              });
+            }
+          ),
+          search: {
+            count: 10,
+            placeholder: "Search Lists",
+            empty: "No List Found",
           },
-          text: 'Estimates',
-          callback: await showEstimates,
-          condition: 'edit',
-        }];
-      }
-    })
-  </script>
-</body>
-
+        });
+      };
+      TrelloPowerUp.initialize({
+        "board-buttons": async function (t, options) {
+          return [
+            {
+              icon: {
+                dark: "https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-black.svg",
+                light:
+                  "https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-white.svg",
+              },
+              text: "Estimates",
+              callback: await showEstimates,
+              condition: "edit",
+            },
+          ];
+        },
+      });
+    </script>
+  </body>
 </html>
