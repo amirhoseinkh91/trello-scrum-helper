@@ -23,16 +23,16 @@
                         });
                       });
                       const estimatePerMember = []
-                      function updateTimesForMember(member, estimates, elapsed) {
-                        let obj = estimatePerMember.find(item => item.username == member)
+                      function updateTimesForMember(userName, estimates, elapsed) {
+                        let obj = estimatePerMember.find(item => item.username == userName)
                         if (obj != null) {
-                          obj.estimates = (obj.estimates || 0 ) + estimates
-                          obj.elapsed = (obj.elapsed || 0 ) + elapsed
+                          obj.estimates = (obj.estimates || 0 ) + (estimates || 0)
+                          obj.elapsed = (obj.elapsed || 0 ) + (elapsed || 0)
                         } else {
                           obj = {
-                            username: member,
-                            estimates: hours,
-                            elapsed: elapsed
+                            username: userName,
+                            estimates: (estimates || 0),
+                            elapsed: (elapsed || 0)
                           }
                           estimatePerMember.push(obj)
                         }
