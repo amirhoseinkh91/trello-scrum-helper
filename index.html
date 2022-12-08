@@ -17,14 +17,14 @@
           doingListId = doingList.id
         });
       var doingCards = t.cards('all').then(function (cards) {
+        console.log('doing list id is ', doingListId)
+        return cards
+      }).then(function (cards) {
         return cards.filter(function (card) {
-          console.log("filter for card: ", card.name, card.id)
           return card.listId == doingListId;
         });
       });
-      doingCards.forEach(element => {
-        console.log('doing card', item.name, item.id)
-      });
+      console.log('doing cards are', doingCards)
       return t.popup({
         title: 'Estimates',
         items: [{
