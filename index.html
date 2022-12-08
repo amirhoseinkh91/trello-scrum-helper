@@ -55,6 +55,7 @@
                       });
                       const estimatePerMember = []
                       cardsInList.forEach(card => {
+                        console.log(card)
                         if (card.members.count > 0) {
                           card.members.forEach(cardMember => {
                             estimatePerMember[cardMember.username] = (estimatePerMember[cardMember.username] || 0) + 1
