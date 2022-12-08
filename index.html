@@ -12,19 +12,16 @@
       var doingListId = t.lists('id', 'name')
         .then(function (lists) {
           var doingList = lists.find(function (list) {
-            console.log('list item:', list)
             return list.name == 'doing'
           });
           doingListId = doingList.id
-          console.log('selected list as doing is', doingList.name, doingList.id)
         });
-      console.log('doing list id is', doingListId)
-      t.cards('all').then(function (cards) {
-        var doingCards = cards.filter(function (card) {
+      var doingCards = t.cards('all').then(function (cards) {
+        return cards.filter(function (card) {
           return card.listId == doingListId;
         });
-        console.log('doing cards are: ', doingCards)
       });
+      console.log('doing cards are: ', doingCards)
       return t.popup({
         title: 'Estimates',
         items: [{
