@@ -41,9 +41,10 @@
         //     console.log("In 2 hours")
         //    }
         // }]
-        items: t.lists('id', 'name')
+        items: await t.lists('id', 'name')
           .then(function (lists) {
             return lists.map(function (list) {
+              console.log('mapping list', list)
               return {
                 text: list.name,
                 callback: function (t, opts) {
