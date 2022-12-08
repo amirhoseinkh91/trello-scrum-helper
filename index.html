@@ -10,9 +10,10 @@
   <script>
     var onBtnClick = function (t, opts) {
       var doingListId = t.lists('id', 'name')
-        .then(function (list) {
-          var doingList = list.filter(function (listItem) {
-            return listItem.name == 'doing'
+        .then(function (lists) {
+          var doingList = lists.find(function (list) {
+            console.log('list item:', list)
+            return list.name == 'doing'
           });
           doingListId = doingList.id
           console.log('selected list as doing is', doingList.name, doingList.id)
