@@ -9,38 +9,54 @@
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
     var showEstimates = async function (t, opts) {
-      var selectedList = await t.lists('id', 'name')
-        .then(function (lists) {
-          return lists.find(function (list) {
-            return list.name == 'Sprint Backlog'
-          });
-        });
-      var cardsInList = await t.cards('all')
-      .then(function (cards) {
-        return cards.filter(function (card) {
-          return card.idList == selectedList.id;
-        })
-        .group(({ member }) => member);
-      });
-      console.log('cards in list', cardsInList)
+      // var selectedList = await t.lists('id', 'name')
+      //   .then(function (lists) {
+      //     return lists.find(function (list) {
+      //       return list.name == 'Sprint Backlog'
+      //     });
+      //   });
+      // var cardsInList = await t.cards('all')
+      // .then(function (cards) {
+      //   return cards.filter(function (card) {
+      //     return card.idList == selectedList.id;
+      //   })
+      //   .group(({ member }) => member);
+      // });
+      // console.log('cards in list', cardsInList)
       return t.popup({
         title: 'Estimates',
-        items: [{
-          text: 'Choose Time',
-          callback: function (t, opts) {
-            console.log("Choose Time")
-           }
-        }, {
-          text: 'In 1 hour',
-          callback: function (t, opts) {
-            console.log("In 1 hour")
-           }
-        }, {
-          text: 'In 2 hours',
-          callback: function (t, opts) {
-            console.log("In 2 hours")
-           }
-        }]
+        // items: [{
+        //   text: 'Choose List',
+        //   callback: function (t, opts) {
+        //     console.log("Choose Time")
+        //    }
+        // }, {
+        //   text: 'In 1 hour',
+        //   callback: function (t, opts) {
+        //     console.log("In 1 hour")
+        //    }
+        // }, {
+        //   text: 'In 2 hours',
+        //   callback: function (t, opts) {
+        //     console.log("In 2 hours")
+        //    }
+        // }]
+        items: t.lists('id', 'name')
+          .then(function (lists) {
+            return lists.map(function (list) {
+              return {
+                text: list.name,
+                callback: function (t, opts) {
+                  console.log('selected list is ', list.name, list.id)
+                }
+              }
+            });
+          }),
+        search: {
+          count: 3,
+          placeholder: 'Search Lists',
+          empty: 'No List Found'
+        }
       });
     };
     TrelloPowerUp.initialize({
