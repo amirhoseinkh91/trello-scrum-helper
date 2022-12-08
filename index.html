@@ -23,30 +23,44 @@
                         });
                       });
                       const estimatePerMember = []
-                      function addEstimateToMember(member, hours) {
+                      function updateTimesForMember(member, estimates, elapsed) {
                         let obj = estimatePerMember.find(item => item.username == member)
                         if (obj != null) {
-                          obj.estimates = (obj.estimates || 0 ) + hours
+                          obj.estimates = (obj.estimates || 0 ) + estimates
+                          obj.elapsed = (obj.elapsed || 0 ) + elapsed
                         } else {
                           obj = {
                             username: member,
-                            estimates: hours
+                            estimates: hours,
+                            elapsed: elapsed
                           }
                           estimatePerMember.push(obj)
                         }
                       }
-                      function readEstimatedFromCardName(card) {
-                        const myArray = /.*(\[[0-9]{1,2}\]).*/.exec(card.name);
-                        console.log(card.name, myArray)
+                      function readEstimatedTimeFromCardName(card) {
+                        const regex = /.*(\[[0-9]{1,2}\]).*/;
+                        if (regex.test(card.name || '')) {
+                          return parseInt(regex.exec(card.name)[1].replace('[', '').replace(']', ''))
+                        } else {
+                          return 0;
+                        }
+                      }
+                      function readElapsedTimeFromCardName(card) {
+                        const regex = /.*(\([0-9]{1,2}\)).*/;
+                        if (regex.test(card.name || '')) {
+                          return parseInt(regex.exec(card.name)[1].replace('(', '').replace(')', ''))
+                        } else {
+                          return 0;
+                        }
                       }
                       cardsInList.forEach(card => {
+                        const cardEstimate = readEstimatedTimeFromCardName(card)
+                        const cardElapsedTime = readElapsedTimeFromCardName(card)
                         if (card.members.length == 0) {
-                          readEstimatedFromCardName(card)
-                          addEstimateToMember('no assignee', 1)
+                          updateTimesForMember('no assignee', cardEstimate, cardElapsedTime)
                         } else {
                           card.members.forEach(cardMember => {
-                            readEstimatedFromCardName(card)
-                            addEstimateToMember(cardMember.username, 1)
+                            updateTimesForMember(cardMember.username, cardEstimate, cardElapsedTime)
                           });
                         }
                       });
@@ -54,7 +68,7 @@
                       title: 'Estimates',
                       items: estimatePerMember.map(function(item) {
                          return {
-                          text: item.username + '\test: ' + item.estimates,
+                          text: item.username + '\test: ' + item.estimates+ '\telapsed: ' + item.elapsed,
                           callback: function() {}
                          };
                       })
