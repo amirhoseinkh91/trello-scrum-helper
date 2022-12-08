@@ -9,7 +9,7 @@
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
     var showEstimates = async function (t, opts) {
-      var sprintBacklogList = await t.lists('id', 'name')
+      var selectedList = await t.lists('id', 'name')
         .then(function (lists) {
           return lists.find(function (list) {
             return list.name == 'Sprint Backlog'
@@ -18,7 +18,7 @@
       var cardsInList = await t.cards('all')
       .then(function (cards) {
         return cards.filter(function (card) {
-          return card.idList == doingList.id;
+          return card.idList == selectedList.id;
         })
         .group(({ member }) => member);
       });
