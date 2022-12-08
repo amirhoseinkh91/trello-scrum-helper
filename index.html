@@ -36,7 +36,7 @@
                         }
                       }
                       function readEstimatedFromCardName(card) {
-                        const myArray = /.*(\[[0-9]{1,2}\]).+/g.exec(card.name);
+                        const myArray = /.*(\[[0-9]{1,2}\]).*/.exec(card.name);
                         console.log(card.name, myArray)
                       }
                       cardsInList.forEach(card => {
