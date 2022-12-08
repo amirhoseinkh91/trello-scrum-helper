@@ -54,7 +54,10 @@
                           return card.idList == list.id;
                         });
                       });
-                    console.log("cards in list are:", list, cardsInList);
+                    var group = cardsInList.group(function (card) {
+                      return card.members.username
+                    })
+                    console.log('group', group)
                     t.popup({
                       title: "",
                       items: [
