@@ -46,7 +46,6 @@
                 return {
                   text: list.name,
                   callback: async function (t, opts) {
-                    console.log("selected list is ", list.name, list.id);
                     var cardsInList = await t
                       .cards("all")
                       .then(function (cards) {
@@ -55,6 +54,7 @@
                         });
                       });
                     const groupByMemberUserName = cardsInList.reduce((group, card) => {
+                      console.log(card.member)
                       const { member } = card.member.username;
                       group[member] = group[member] ?? [];
                       group[member].push(card);
