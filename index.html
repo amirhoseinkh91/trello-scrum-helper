@@ -8,38 +8,8 @@
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
     <script>
       var showEstimates = async function (t, opts) {
-        // var selectedList = await t.lists('id', 'name')
-        //   .then(function (lists) {
-        //     return lists.find(function (list) {
-        //       return list.name == 'Sprint Backlog'
-        //     });
-        //   });
-        // var cardsInList = await t.cards('all')
-        // .then(function (cards) {
-        //   return cards.filter(function (card) {
-        //     return card.idList == selectedList.id;
-        //   })
-        //   .group(({ member }) => member);
-        // });
-        // console.log('cards in list', cardsInList)
         return t.popup({
-          title: "Estimates",
-          // items: [{
-          //   text: 'Choose List',
-          //   callback: function (t, opts) {
-          //     console.log("Choose Time")
-          //    }
-          // }, {
-          //   text: 'In 1 hour',
-          //   callback: function (t, opts) {
-          //     console.log("In 1 hour")
-          //    }
-          // }, {
-          //   text: 'In 2 hours',
-          //   callback: function (t, opts) {
-          //     console.log("In 2 hours")
-          //    }
-          // }]
+          title: "Select a list:",
           items: await t.lists("id", "name").then(
             await function (lists) {
               return lists.map(function (list) {
@@ -65,9 +35,12 @@
                       });
                     console.log('group', estimatePerMember)
                     t.popup({
-                      title: "",
-                      items: estimatePerMember.map(item => {
-                         text: item
+                      title: 'Estimates',
+                      items: estimatePerMember.map(function(item) {
+                        console.log(item)
+                         return {
+                          text: item
+                         };
                       })
                     });
                   },
