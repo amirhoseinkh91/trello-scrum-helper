@@ -31,7 +31,7 @@ const showEstimates = async function (t, opts) {
                 function readEstimatedTimeFromCardName(card) {
                   const regex = /.*(\[[0-9]{1,2}\]).*/;
                   if (regex.test(card.name || '')) {
-                    return parseInt(regex.exec(card.name)[1].replace('[', '').replace(']', ''))
+                    return parseInt(regex.exec(card.name)[1].replace('(', '').replace(')', ''))
                   } else {
                     return 0;
                   }
@@ -39,7 +39,7 @@ const showEstimates = async function (t, opts) {
                 function readElapsedTimeFromCardName(card) {
                   const regex = /.*(\([0-9]{1,2}\)).*/;
                   if (regex.test(card.name || '')) {
-                    return parseInt(regex.exec(card.name)[1].replace('(', '').replace(')', ''))
+                    return parseInt(regex.exec(card.name)[1].replace('[', '').replace(']', ''))
                   } else {
                     return 0;
                   }
