@@ -70,7 +70,6 @@ const showEstimates = async function (t, opts) {
       }
     ),
     search: {
-      count: 30,
       placeholder: "Search Lists",
       empty: "No List Found",
     },
