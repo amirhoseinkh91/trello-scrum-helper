@@ -1,7 +1,7 @@
 const newShowEstimates = async function (trello, opts) {
   return trello.modal({
     title: "Estimates",
-    url: './../../public/EstimatesModal.html',
+    url: './../EstimatesModal.html',
     fullscreen: true
   });
 };
