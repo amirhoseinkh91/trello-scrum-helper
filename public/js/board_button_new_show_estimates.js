@@ -1,8 +1,11 @@
+var colors = window.TrelloPowerUp.util.colors;
+
 const newShowEstimates = async function (trello, opts) {
   return trello.modal({
     title: "Estimates",
     url: './../../public/EstimatesModal.html',
     fullscreen: true,
+    accentColor: colors.getHexString('blue'),
     actions: [{
       icon: './../../public/icons/wall-clock-24.png',
       url: 'https://google.com',
