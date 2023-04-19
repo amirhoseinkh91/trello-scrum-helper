@@ -17,11 +17,11 @@ function readEstimatedTimeFromCardName(card) {
 const showTeamVelocity = async function (t, opts) {
   const validListNames = ["Sprint Backlog", "Doing", "Testing", "Code Review", "Deploy Pending", "Done 🎉"];
   const velocityPerMember = [];
-  for (const list of t.lists("id", "name")) {
+  for (const list of await t.lists("id", "name")) {
     if (!validListNames.includes(list.name)) {
       continue;
     }
-    for (const card of t.cards("all")) {
+    for (const card of await t.cards("all")) {
       if (card.idList === list.id) {
         const elapsedTime = readElapsedTimeFromCardName(card)
         const estimatedTime = readEstimatedTimeFromCardName(card)
