@@ -51,7 +51,8 @@ const showTeamVelocity = async function (t, opts) {
   velocityPerMember.forEach(item => {
     resultItems.push(item.username + "\t" + item.not_started + "\t" + item.doing + "\t" + item.done);
   });
-  return t.popup({
+  console.log ("resultitemsssssss", resultItems)
+  return await t.popup({
     title: "Team Velocity",
     items: resultItems
   });
