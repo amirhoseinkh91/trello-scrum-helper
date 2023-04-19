@@ -36,6 +36,7 @@ const showTeamVelocity = async function (t, opts) {
             }
             velocityPerMember.push(obj)
           }
+          console.log("ffffffff", list.name, elapsedTime, estimatedTime, obj)
           if (list.name === "Done 🎉") {
             obj.done = (obj.done || 0 ) + (elapsedTime || 0)
           } else if (list.name === "Sprint Backlog") {
