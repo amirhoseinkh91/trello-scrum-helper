@@ -27,7 +27,7 @@ const showTeamVelocity = async function (t, opts) {
         const estimatedTime = readEstimatedTimeFromCardName(card)
         card.members.forEach(cardMember => {
           let obj = velocityPerMember.find(item => item.username == cardMember.username);
-          if (obj === null) {
+          if (obj === null || obj === undefined) {
             obj = {
               username: cardMember.username,
               done: 0,
