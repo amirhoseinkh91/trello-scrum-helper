@@ -36,13 +36,12 @@ const showTeamVelocity = async function (t, opts) {
             }
             velocityPerMember.push(obj)
           }
-          console.log("ffffffff", list.name, elapsedTime, estimatedTime, obj)
           if (list.name === "Done 🎉") {
-            obj.done = (obj.done || 0 ) + (elapsedTime || 0)
+            obj.done = (obj.done) + (elapsedTime)
           } else if (list.name === "Sprint Backlog") {
-            obj.not_started = (obj.not_started || 0 ) + (estimatedTime || 0)
+            obj.not_started = (obj.not_started) + (estimatedTime)
           } else {
-            obj.doing = (obj.doing || 0 ) + (elapsedTime || 0)
+            obj.doing = (obj.doing) + (elapsedTime)
           }
         });
       }
