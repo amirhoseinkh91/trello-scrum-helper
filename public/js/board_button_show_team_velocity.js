@@ -47,9 +47,8 @@ const showTeamVelocity = async function (t, opts) {
       }
     }
   }
-  const resultItems = [ {text: "username" + "\t" + "not_started" + "\t" + "doing" + "item.done"}];
-  velocityPerMember.forEach(item => {
-    resultItems.push({text: item.username + "\t" + item.not_started + "\t" + item.doing + "\t" + item.done});
+  const resultItems = velocityPerMember.map(item => {
+    return {text: item.username + "=> not started: " +  item.not_started + ", doing: " + item.doing + ", done: " + item.done};
   });
   return await t.popup({
     title: "Team Velocity",
