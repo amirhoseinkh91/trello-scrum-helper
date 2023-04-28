@@ -54,7 +54,7 @@ const showTeamVelocity = async function (t, opts) {
   //   title: "Team Velocity",
   //   items: resultItems
   // });
-  return await t.modal({
+  return await t.popup({
     url: "./../../public/TeamVelocity.html",
     args: {
       velocitiesPerMember: velocityPerMember,
