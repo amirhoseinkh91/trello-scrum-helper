@@ -13,10 +13,10 @@
 
     function loadData() {
       var t = window.TrelloPowerUp.iframe();
-      const velocities = t.arg('resultItems');
+      const velocities = t.arg('velocitiesPerMember');
 
       const table = document.createElement('table')
-      table.innerHTML = "<thead><th>user</th><th>Not Started</th><th>Doing</th><th>Done</th></thead>"
+      table.innerHTML = "<thead><th>User</th><th>Not Started</th><th>Doing</th><th>Done</th></thead>"
       for (velocityObject of velocities) {
         const newRow =document.createElement('tr')
         const tdUser = document.createElement(td)
