@@ -17,8 +17,8 @@
 
       const table = document.createElement('table')
       table.innerHTML = "<thead><th>User</th><th>Not Started</th><th>Doing</th><th>Done</th></thead>"
-      for (velocityObject of velocities) {
-        const newRow =document.createElement('tr')
+      for (const velocityObject of velocities) {
+        const newRow = document.createElement('tr')
         const tdUser = document.createElement(td)
         const tdNotStarted = document.createElement(td)
         const tdDoing = document.createElement(td)
