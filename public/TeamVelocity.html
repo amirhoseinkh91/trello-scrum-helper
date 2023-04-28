@@ -10,11 +10,12 @@
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script type="module">
 
-    function loadData(t, opts) {
-      const resultItems = t.arg('resultItems')
+    function loadData() {
+      var t = window.TrelloPowerUp.iframe();
+      const resultItems = t.arg('resultItems');
       console.log("ressssssssss", resultItems)
     }
-    loadData(Trello)
+    loadData()
   </script>
 <v-data-table headers="[{text: 'سلام'}]">
 
