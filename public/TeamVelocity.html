@@ -7,18 +7,36 @@
 </head>
 <html>
 <body>
+  <div id="velocity-table"></div>
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script type="module">
 
     function loadData() {
       var t = window.TrelloPowerUp.iframe();
-      const resultItems = t.arg('resultItems');
-      console.log("ressssssssss", resultItems)
+      const velocities = t.arg('resultItems');
+
+      const table = document.createElement('table')
+      table.innerHTML = "<thead><th>user</th><th>Not Started</th><th>Doing</th><th>Done</th></thead>"
+      for (velocityObject of velocities) {
+        const newRow =document.createElement('tr')
+        const tdUser = document.createElement(td)
+        const tdNotStarted = document.createElement(td)
+        const tdDoing = document.createElement(td)
+        const tdDone = document.createElement(td)
+        tdUser.textContent = velocityObject.username
+        tdNotStarted.textContent = velocityObject.notStarted
+        tdDoing.textContent = velocityObject.doing
+        tdDone.textContent = velocityObject.done
+        newRow.appendChild(tdUser)
+        newRow.appendChild(tdNotStarted)
+        newRow.appendChild(tdDoing)
+        newRow.appendChild(tdDone)
+        table.appendChild(newRow)
+      }
+      const target = document.getElementById('table');
+      target.appendChild(table);
     }
     loadData()
   </script>
-<v-data-table headers="[{text: 'سلام'}]">
-
-</v-data-table>
 </body>
 </html>

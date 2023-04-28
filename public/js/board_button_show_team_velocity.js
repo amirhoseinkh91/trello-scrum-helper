@@ -32,14 +32,14 @@ const showTeamVelocity = async function (t, opts) {
               username: cardMember.username,
               done: 0,
               doing: 0,
-              not_started: 0,
+              notStarted: 0,
             }
             velocityPerMember.push(obj)
           }
           if (list.name === "Done 🎉") {
             obj.done = (obj.done) + (elapsedTime)
           } else if (list.name === "Sprint Backlog") {
-            obj.not_started = (obj.not_started) + (estimatedTime)
+            obj.notStarted = (obj.notStarted) + (estimatedTime)
           } else {
             obj.doing = (obj.doing) + (elapsedTime)
           }
@@ -57,7 +57,7 @@ const showTeamVelocity = async function (t, opts) {
   return await t.modal({
     url: "./../../public/TeamVelocity.html",
     args: {
-      resultItems: velocityPerMember,
+      velocitiesPerMember: velocityPerMember,
     },
     fullscreen: false,
     title: "Team Velocity",
