@@ -19,10 +19,10 @@
       table.innerHTML = "<thead><th>User</th><th>Not Started</th><th>Doing</th><th>Done</th></thead>"
       for (const velocityObject of velocities) {
         const newRow = document.createElement('tr')
-        const tdUser = document.createElement(td)
-        const tdNotStarted = document.createElement(td)
-        const tdDoing = document.createElement(td)
-        const tdDone = document.createElement(td)
+        const tdUser = document.createElement('td')
+        const tdNotStarted = document.createElement('td')
+        const tdDoing = document.createElement('td')
+        const tdDone = document.createElement('td')
         tdUser.textContent = velocityObject.username
         tdNotStarted.textContent = velocityObject.notStarted
         tdDoing.textContent = velocityObject.doing
