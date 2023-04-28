@@ -8,6 +8,7 @@
 <html>
 <body>
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
   <script type="module">
     function loadData(t, opts) {
       const resultItems = t.arg('resultItems')
@@ -15,19 +16,8 @@
     }
     loadData()
   </script>
-  <table>
-    <thead>
-    <tr>
-      <th>username</th>
-      <th>Not Started</th>
-      <th>Doing</th>
-      <th>Done</th>
-    </tr>
-    </thead>
-    <tbody>
+<v-data-table headers="[{text: 'سلام'}]">
 
-    </tbody>
-  </table>
-
+</v-data-table>
 </body>
 </html>
