@@ -8,13 +8,13 @@
 <html>
 <body>
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
-  <script src="https://unpkg.com/vue@next"></script>
   <script type="module">
+
     function loadData(t, opts) {
       const resultItems = t.arg('resultItems')
       console.log("ressssssssss", resultItems)
     }
-    loadData()
+    loadData(Trello)
   </script>
 <v-data-table headers="[{text: 'سلام'}]">
 

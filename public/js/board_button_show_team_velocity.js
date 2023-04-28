@@ -57,7 +57,7 @@ const showTeamVelocity = async function (t, opts) {
   return await t.modal({
     url: "./../../public/TeamVelocity.html",
     args: {
-      resultItems: resultItems,
+      resultItems: velocityPerMember,
     },
     fullscreen: false,
     title: "Team Velocity",
