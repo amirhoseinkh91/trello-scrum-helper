@@ -47,13 +47,7 @@ const showSummary = async function (t, opts) {
       }
     }
   }
-  const resultItems = velocityPerMember.map(item => {
-    return {text: item.username + "-> not started " +  item.not_started + ", doing " + item.doing + ", done " + item.done};
-  });
-  // return await t.popup({
-  //   title: "Team Velocity",
-  //   items: resultItems
-  // });
+
   return await t.modal({
     url: "/public/BoardSummary.html",
     args: {
