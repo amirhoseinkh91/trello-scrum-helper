@@ -1,18 +1,18 @@
 var colors = window.TrelloPowerUp.util.colors;
 
-const newShowEstimates = async function (trello, opts) {
+const showSummary = async function (trello, opts) {
   return trello.modal({
     title: "Estimates",
-    url: './../../public/EstimatesModal.html',
+    url: '/public/BoardSummary.html',
     fullscreen: true,
     accentColor: colors.getHexString('blue'),
     actions: [{
-      icon: './../../public/icons/wall-clock-24.png',
+      icon: '/public/icons/wall-clock-24.png',
       url: 'https://google.com',
       alt: 'Leftmost',
       position: 'left',
     }, {
-      icon: './../../public/icons/wall-clock-24.png',
+      icon: '/public/icons/wall-clock-24.png',
       callback: (tr) => tr.popup({
         title: tr.localizeKey('appear_in_settings'),
         url: 'settings.html',
@@ -21,7 +21,7 @@ const newShowEstimates = async function (trello, opts) {
       alt: 'Second from left',
       position: 'left',
     }, {
-      icon: './../../public/icons/wall-clock-24.png',
+      icon: '/public/icons/wall-clock-24.png',
       callback: () => console.log(':tada:'),
       alt: 'Right side',
       position: 'right',
@@ -29,4 +29,4 @@ const newShowEstimates = async function (trello, opts) {
   });
 };
 
-export { newShowEstimates }
+export { showSummary }

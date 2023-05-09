@@ -9,7 +9,7 @@
     <script type="module">
       import { showEstimates } from "/public/js/board_button_show_estimates.js"
       import { showTeamVelocity } from "/public/js/board_button_show_team_velocity.js"
-      import { newShowEstimates } from "/public/js/board_button_new_show_estimates.js"
+      import { showSummary } from "/public/js/board_button_show_summary.js"
       TrelloPowerUp.initialize({
         "board-buttons": async function (trello, options) {
           return [
@@ -28,7 +28,7 @@
             {
                 icon: "./public/icons/wall-clock-24.png",
                 text: "Summary",
-                callback: await newShowEstimates,
+                callback: await showSummary,
                 condition: "admin",
             },
           ];
