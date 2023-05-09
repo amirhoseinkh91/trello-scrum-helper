@@ -114,7 +114,7 @@
           },
           getArgument(argument, defaultValue) {
             try {
-              return iframe.iframe().get(argument);
+              return window.TrelloPowerUp.iframe().get(argument);
             } catch (error) {
               console.error('getting argument error', argument, error)
               return defaultValue;
