@@ -116,14 +116,13 @@
             try {
               return iframe.iframe().get(argument);
             } catch (error) {
+              console.error('getting argument error', argument, error)
               return defaultValue;
             }
           },
           loadVelocityTableData() {
-            const velocities = this.getArgument(
-              "velocitiesPerMember",
-              this.velocitiesTable.data
-            );
+            const velocities = this.getArgument("velocitiesPerMember", []);
+            console.log('velocities', velocities)
             this.velocitiesTable.data = velocities.map((item) => {
               return {
                 user: item.username ?? "بدون اساینی",
@@ -149,7 +148,6 @@
           this.loadEstimationsTableData();
           this.loadVelocityTableData();
           this.showVelocitiesTable();
-          console.log('ssssssssss', this)
         },
       });
     </script>
