@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- This is a development version of Vue.js! -->
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css" />
+    <style>
+      html {
+        direction: rtl;
+      }
+
+      .buttons {
+        padding-left: 33%;
+      }
+
+      table,
+      th,
+      tr,
+      td {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app_basic" class="experiment-block">
+      <div class="buttons">
+        <button class="mod-primary" @click="showVelocitiesTable">
+          جدول ولاسیتی
+        </button>
+        <button class="mod-primary" @click="showEstimationsTable">
+          تخمین ها
+        </button>
+        <!-- <button class="mod-primary" @click="hideAllItems">3جدول زمانی</button> -->
+        <!-- <button class="mod-primary" @click="hideAllItems">4جدول زمانی</button> -->
+      </div>
+
+      <hr />
+      <!-- the sprint time summary -->
+      <template v-if="velocitiesTable.show">
+        <table>
+          <thead>
+            <th>کاربر</th>
+            <th>شروع نشده</th>
+            <th>در حال انجام</th>
+            <th>انجام شده</th>
+            <th>پلن نشده در حال انجام</th>
+            <th>پلن نشده انجام شده</th>
+          </thead>
+          <tbody>
+            <tr v-for="item in velocitiesTable.data">
+              <td>{{ item.user }}</td>
+              <td>{{ item.notStarted }}</td>
+              <td>{{ item.doing }}</td>
+              <td>{{ item.done }}</td>
+              <td>{{ item.notPlannedDoing }}</td>
+              <td>{{ item.notPlannedDone }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+
+      <!-- the sprint card count summary -->
+      <template v-if="estimationsTable.show">
+        <table>
+          <thead>
+            <th>کاربر</th>
+            <th>جمع تخمین ها</th>
+            <th>مجموع زمان های سپری شده</th>
+          </thead>
+          <tbody>
+            <tr v-for="item in estimationsTable.data">
+              <td>{{ item.user }}</td>
+              <td>{{ item.estimates }}</td>
+              <td>{{ item.elapsed }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app_basic",
+        data: {
+          velocitiesTable: {
+            show: false,
+            data: [],
+          },
+          estimationsTable: {
+            show: false,
+            data: [],
+          },
+        },
+        computed: {
+          iframe() {
+            return window.TrelloPowerUp;
+          },
+        },
+        methods: {
+          hideAllTables() {
+            this.velocitiesTable.show = false;
+            this.estimationsTable.show = false;
+          },
+          showVelocitiesTable() {
+            this.hideAllTables();
+            this.velocitiesTable.show = true;
+          },
+          showEstimationsTable() {
+            this.hideAllTables();
+            this.estimationsTable.show = true;
+          },
+          getArgument(argument, defaultValue) {
+            try {
+              return iframe.iframe().get(argument);
+            } catch (error) {
+              return defaultValue;
+            }
+          },
+          loadVelocityTableData() {
+            const velocities = this.getArgument(
+              "velocitiesPerMember",
+              this.velocitiesTable.data
+            );
+            this.velocitiesTable.data = velocities.map((item) => {
+              return {
+                user: item.username ?? "بدون اساینی",
+                notStarted: item.not_started ?? 0,
+                doing: item.doing ?? 0,
+                done: item.done ?? 0,
+                notPlannedDoing: 0 ?? 0,
+                notPlannedDone: 0 ?? 0,
+              };
+            });
+          },
+          loadEstimationsTableData() {
+            this.estimationsTable.data = [
+              {
+                user: "امیرحسین",
+                estimates: 0,
+                elapsed: 0,
+              },
+            ];
+          },
+        },
+        mounted() {
+          this.loadEstimationsTableData();
+          this.loadVelocityTableData();
+          this.showVelocitiesTable();
+        },
+      });
+    </script>
+  </body>
+</html>

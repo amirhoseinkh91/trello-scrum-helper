@@ -55,12 +55,12 @@ const showTeamVelocity = async function (t, opts) {
   //   items: resultItems
   // });
   return await t.modal({
-    url: "./../../public/TeamVelocity.html",
+    url: "/public/BoardSummary.html",
     args: {
       velocitiesPerMember: velocityPerMember,
     },
     fullscreen: false,
-    title: "Team Velocity",
+    title: "Summary",
   });
 };
 
