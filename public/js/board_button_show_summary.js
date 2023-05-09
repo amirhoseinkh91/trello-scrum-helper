@@ -1,31 +1,66 @@
-var colors = window.TrelloPowerUp.util.colors;
-
-const showSummary = async function (trello, opts) {
-  return trello.modal({
-    title: "Estimates",
-    url: '/public/BoardSummary.html',
-    fullscreen: true,
-    accentColor: colors.getHexString('blue'),
-    actions: [{
-      icon: '/public/icons/wall-clock-24.png',
-      url: 'https://google.com',
-      alt: 'Leftmost',
-      position: 'left',
-    }, {
-      icon: '/public/icons/wall-clock-24.png',
-      callback: (tr) => tr.popup({
-        title: tr.localizeKey('appear_in_settings'),
-        url: 'settings.html',
-        height: 164,
-      }),
-      alt: 'Second from left',
-      position: 'left',
-    }, {
-      icon: '/public/icons/wall-clock-24.png',
-      callback: () => console.log(':tada:'),
-      alt: 'Right side',
-      position: 'right',
-    }],
+function readElapsedTimeFromCardName(card) {
+  const regex = /.*(\[[0-9]{1,2}\]).*/;
+  if (regex.test(card.name || '')) {
+    return parseInt(regex.exec(card.name)[1].replace('[', '').replace(']', ''))
+  } else {
+    return 0;
+  }
+}
+function readEstimatedTimeFromCardName(card) {
+  const regex = /.*(\([0-9]{1,2}\)).*/;
+  if (regex.test(card.name || '')) {
+    return parseInt(regex.exec(card.name)[1].replace('(', '').replace(')', ''))
+  } else {
+    return 0;
+  }
+}
+const showSummary = async function (t, opts) {
+  const validListNames = ["Sprint Backlog", "Doing", "Testing", "Code Review", "Deploy Pending", "Done 🎉"];
+  const velocityPerMember = [];
+  for (const list of await t.lists("id", "name")) {
+    if (!validListNames.includes(list.name)) {
+      continue;
+    }
+    for (const card of await t.cards("all")) {
+      if (card.idList === list.id) {
+        const elapsedTime = readElapsedTimeFromCardName(card)
+        const estimatedTime = readEstimatedTimeFromCardName(card)
+        card.members.forEach(cardMember => {
+          let obj = velocityPerMember.find(item => item.username == cardMember.username);
+          if (obj === null || obj === undefined) {
+            obj = {
+              username: cardMember.username,
+              done: 0,
+              doing: 0,
+              notStarted: 0,
+            }
+            velocityPerMember.push(obj)
+          }
+          if (list.name === "Done 🎉") {
+            obj.done = (obj.done) + (elapsedTime)
+          } else if (list.name === "Sprint Backlog") {
+            obj.notStarted = (obj.notStarted) + (estimatedTime)
+          } else {
+            obj.doing = (obj.doing) + (elapsedTime)
+          }
+        });
+      }
+    }
+  }
+  const resultItems = velocityPerMember.map(item => {
+    return {text: item.username + "-> not started " +  item.not_started + ", doing " + item.doing + ", done " + item.done};
+  });
+  // return await t.popup({
+  //   title: "Team Velocity",
+  //   items: resultItems
+  // });
+  return await t.modal({
+    url: "/public/BoardSummary.html",
+    args: {
+      velocitiesPerMember: velocityPerMember,
+    },
+    fullscreen: false,
+    title: "Summary",
   });
 };
 

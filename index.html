@@ -8,28 +8,21 @@
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
     <script type="module">
       import { showEstimates } from "/public/js/board_button_show_estimates.js"
-      import { showTeamVelocity } from "/public/js/board_button_show_team_velocity.js"
       import { showSummary } from "/public/js/board_button_show_summary.js"
       TrelloPowerUp.initialize({
         "board-buttons": async function (trello, options) {
           return [
-            {
-              icon: "./public/icons/wall-clock-24.png",
-              text: "Estimates",
-              callback: await showEstimates,
-              condition: "edit",
-            },
+            // {
+            //   icon: "./public/icons/wall-clock-24.png",
+            //   text: "Estimates",
+            //   callback: await showEstimates,
+            //   condition: "edit",
+            // },
             {
               icon: "./public/icons/clock-fast.png",
-              text: "Velocity",
-              callback: await showTeamVelocity,
+              text: "Summary",
+              callback: await showSummary,
               condition: "edit",
-            },
-            {
-                icon: "./public/icons/wall-clock-24.png",
-                text: "Summary",
-                callback: await showSummary,
-                condition: "admin",
             },
           ];
         },
