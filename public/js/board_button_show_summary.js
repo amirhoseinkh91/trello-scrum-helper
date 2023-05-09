@@ -59,7 +59,7 @@ const showSummary = async function (t, opts) {
     args: {
       velocitiesPerMember: velocityPerMember,
     },
-    fullscreen: false,
+    fullscreen: true,
     title: "Summary",
   });
 };
