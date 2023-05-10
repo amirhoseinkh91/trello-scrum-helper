@@ -1,19 +1,4 @@
-function readElapsedTimeFromCardName(card) {
-  const regex = /.*(\[[0-9]{1,2}\]).*/;
-  if (regex.test(card.name || '')) {
-    return parseInt(regex.exec(card.name)[1].replace('[', '').replace(']', ''))
-  } else {
-    return 0;
-  }
-}
-function readEstimatedTimeFromCardName(card) {
-  const regex = /.*(\([0-9]{1,2}\)).*/;
-  if (regex.test(card.name || '')) {
-    return parseInt(regex.exec(card.name)[1].replace('(', '').replace(')', ''))
-  } else {
-    return 0;
-  }
-}
+import { readElapsedTimeFromCard, readEstimatedTimeFromCard } from "/public/js/global.js"
 const showSummary = async function (t, opts) {
   const validListNames = ["Sprint Backlog", "Doing", "Testing", "Code Review", "Deploy Pending", "Done 🎉"];
   const velocityPerMember = [];
@@ -23,8 +8,8 @@ const showSummary = async function (t, opts) {
     }
     for (const card of await t.cards("all")) {
       if (card.idList === list.id) {
-        const elapsedTime = readElapsedTimeFromCardName(card)
-        const estimatedTime = readEstimatedTimeFromCardName(card)
+        const elapsedTime = readElapsedTimeFromCard(card)
+        const estimatedTime = readEstimatedTimeFromCard(card)
         card.members.forEach(cardMember => {
           let obj = velocityPerMember.find(item => item.username == cardMember.username);
           if (obj === null || obj === undefined) {

@@ -79,7 +79,7 @@
     </div>
 
     <script type="module">
-      import { getNameByUserName } from "/public/js/map_usernames.js";
+      import { getNameByUserName } from "/public/js/global.js";
       new Vue({
         el: "#app_basic",
         data: {
@@ -123,10 +123,11 @@
           },
           loadVelocityTableData() {
             const velocities = this.getArgument("velocitiesPerMember", []);
+            console.log('velocitiesss', velocities)
             this.velocitiesTable.data = velocities.map((item) => {
               return {
-                user: getNameByUserName(item.username ?? "بدون اساینی"),
-                notStarted: item.not_started ?? 0,
+                user: convertUsernameToName(item.username ?? "بدون اساینی"),
+                notStarted: item.notStarted ?? 0,
                 doing: item.doing ?? 0,
                 done: item.done ?? 0,
                 notPlannedDoing: 0 ?? 0,
