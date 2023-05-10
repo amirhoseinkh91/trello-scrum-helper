@@ -8,9 +8,16 @@
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
     <script type="module">
       import { showSummary } from "/public/js/showBoardSummary.js"
+      import { showEstimates } from "/public/js/board_button_show_estimates.js"
       TrelloPowerUp.initialize({
         "board-buttons": async function (trello, options) {
           return [
+          {
+              icon: "./public/icons/wall-clock-24.png",
+              text: "Estimates",
+              callback: await showEstimates,
+              condition: "edit",
+            },
             {
               icon: "./public/icons/writing-summary.png",
               text: "Summary",
