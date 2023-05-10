@@ -1,12 +1,13 @@
 import { readElapsedTimeFromCard, readEstimatedTimeFromCard } from "/public/js/global.js"
-const showSummary = async function (t, opts) {
+
+const showSummary = async function (trello) {
   const validListNames = ["Sprint Backlog", "Doing", "Testing", "Code Review", "Deploy Pending", "Done 🎉"];
   const velocityPerMember = [];
-  for (const list of await t.lists("id", "name")) {
+  for (const list of await trello.lists("id", "name")) {
     if (!validListNames.includes(list.name)) {
       continue;
     }
-    for (const card of await t.cards("all")) {
+    for (const card of await trello.cards("all")) {
       if (card.idList === list.id) {
         const elapsedTime = readElapsedTimeFromCard(card)
         const estimatedTime = readEstimatedTimeFromCard(card)
@@ -33,7 +34,7 @@ const showSummary = async function (t, opts) {
     }
   }
 
-  return await t.modal({
+  return await trello.modal({
     url: "/public/BoardSummary.html",
     args: {
       velocitiesPerMember: velocityPerMember,

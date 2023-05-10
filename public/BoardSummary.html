@@ -126,7 +126,7 @@
             console.log('velocitiesss', velocities)
             this.velocitiesTable.data = velocities.map((item) => {
               return {
-                user: convertUsernameToName(item.username ?? "بدون اساینی"),
+                user: convertUsernameToName(item.username),
                 notStarted: item.notStarted ?? 0,
                 doing: item.doing ?? 0,
                 done: item.done ?? 0,
