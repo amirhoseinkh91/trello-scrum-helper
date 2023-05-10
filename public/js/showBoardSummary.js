@@ -1,4 +1,22 @@
-import { readElapsedTimeFromCard, readEstimatedTimeFromCard } from "/public/js/global.js"
+// import { readElapsedTimeFromCard, readEstimatedTimeFromCard } from "/public/js/global.js"
+
+function readEstimatedTimeFromCard(card) {
+  const regex = /.*(\([0-9]{1,2}\)).*/;
+  if (regex.test(card.name || '')) {
+    return parseInt(regex.exec(card.name)[1].replace('(', '').replace(')', ''))
+  } else {
+    return 0;
+  }
+}
+
+function readElapsedTimeFromCard(card) {
+  const regex = /.*(\[[0-9]{1,2}\]).*/;
+  if (regex.test(card.name || '')) {
+    return parseInt(regex.exec(card.name)[1].replace('[', '').replace(']', ''))
+  } else {
+    return 0;
+  }
+}
 
 const showSummary = async function (trello) {
   const validListNames = ["Sprint Backlog", "Doing", "Testing", "Code Review", "Deploy Pending", "Done 🎉"];
