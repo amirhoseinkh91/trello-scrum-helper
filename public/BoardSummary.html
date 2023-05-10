@@ -33,10 +33,7 @@
         <button class="mod-primary" @click="showEstimationsTable">
           تخمین ها
         </button>
-        <!-- <button class="mod-primary" @click="hideAllItems">3جدول زمانی</button> -->
-        <!-- <button class="mod-primary" @click="hideAllItems">4جدول زمانی</button> -->
       </div>
-
       <hr />
       <!-- the sprint time summary -->
       <template v-if="velocitiesTable.show">
@@ -82,7 +79,7 @@
     </div>
 
     <script type="module">
-      import { getNameByUserName } from '/public/js/map_usernames.js'
+      import { getNameByUserName } from "/public/js/map_usernames.js";
       new Vue({
         el: "#app_basic",
         data: {
@@ -96,9 +93,12 @@
           },
         },
         computed: {
-          iframe() {
+          trello() {
             return window.TrelloPowerUp;
           },
+          iframe() {
+            return trello.iframe();
+          }
         },
         methods: {
           hideAllTables() {
@@ -115,15 +115,14 @@
           },
           getArgument(argument, defaultValue) {
             try {
-              return window.TrelloPowerUp.iframe().arg(argument);
+              return this.iframe.arg(argument);
             } catch (error) {
-              console.error('getting argument error', argument, error)
+              console.error("getting argument error", argument, error);
               return defaultValue;
             }
           },
           loadVelocityTableData() {
             const velocities = this.getArgument("velocitiesPerMember", []);
-            console.log('velocities', velocities)
             this.velocitiesTable.data = velocities.map((item) => {
               return {
                 user: getNameByUserName(item.username ?? "بدون اساینی"),
